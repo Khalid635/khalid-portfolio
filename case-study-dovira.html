@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<meta name="description" content="DOVIRA — open-source AI download manager by Khalid Bin Masud. How it was built: Electron + React + TypeScript, yt-dlp, aria2, FFmpeg, 374 unit tests and 8 Playwright E2E tests." />
+<meta property="og:title" content="DOVIRA — Case Study · Khalid Bin Masud" />
+<meta property="og:description" content="An open-source AI download manager: 15 releases, 68 commits, 374 unit tests, 8 E2E tests. Built in the open, Nov 2026." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://khalid635.github.io/case-study-dovira.html" />
+<link rel="icon" href="data:," />
+<title>DOVIRA — Case Study · Khalid Bin Masud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient"></div>
+<div class="gridlines"></div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="Khalid Bin Masud — home">
+      <span class="brand-mark">KM</span>
+      <span><span class="bname">Khalid Bin Masud</span><small>FULL-STACK DEVELOPER</small></span>
+    </a>
+    <nav class="links" id="navLinks" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#credentials">Credentials</a>
+      <a href="index.html#journey">Journey</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary btn-sm" href="https://github.com/Khalid635" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap cs-hero">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Case study — DOVIRA</span>
+      <h2>DOVIRA — an AI download<br>manager, built in the open.</h2>
+      <p>“Download Smarter. Go Further.” A free, open-source desktop app that downloads video and audio with quality choice, an AI Assistant, and no ads, no tracking, no paywall. Built in November 2026 — fifteen releases in five days, all in public on GitHub.</p>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://getdovira.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/Khalid635/dovira" target="_blank" rel="noopener">GitHub repo ↗</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/posts/khalid-bin-masud-817a913b9_buildinpublic-opensource-electron-share-7531080292997160960-Xa1Y/" target="_blank" rel="noopener">Launch post ↗</a>
+    </div>
+    <div class="cs-stats">
+      <div class="cs-stat reveal"><b>v1.4.3</b><span>Current version</span></div>
+      <div class="cs-stat reveal"><b>15</b><span>Releases</span></div>
+      <div class="cs-stat reveal"><b>68</b><span>Commits</span></div>
+      <div class="cs-stat reveal"><b>374</b><span>Unit tests passing</span></div>
+      <div class="cs-stat reveal"><b>8/8</b><span>Playwright E2E tests</span></div>
+      <div class="cs-stat reveal"><b>≈68%</b><span>Line coverage</span></div>
+    </div>
+
+    <div class="cs-block reveal">
+      <h2>The problem</h2>
+      <p>Most download managers are closed-source, paid, Windows-only, or abandoned. The open ones are often single-platform or unmaintained. I wanted one that is free, open, cross-platform — and smart: it should understand what I ask for in plain English or Bangla, and keep working when video sites change.</p>
+    </div>
+
+    <div class="cs-block reveal">
+      <h2>What it does</h2>
+      <ul>
+        <li>Downloads video and audio with quality choice, or audio-only MP3</li>
+        <li>A floating Download button in the browser, plus a browser extension that pairs with the app</li>
+        <li>An AI Assistant that takes commands in English and Bangla</li>
+        <li>Playlist and channel downloads, with a fallback when a direct download fails</li>
+        <li>Self-healing engine updates — when YouTube breaks, the app updates yt-dlp itself and retries</li>
+        <li>Auto-start with Windows, a progress window, and download history</li>
+      </ul>
+    </div>
+
+    <div class="cs-block reveal">
+      <h2>How it is built</h2>
+      <p>Electron + React + TypeScript + Tailwind, with electron-vite, Zustand for state and SQLite for history. The download engines are yt-dlp, aria2 and FFmpeg, bundled with the app. A small local API runs on the machine so the browser extension can talk to the app securely, with a Bearer token. The AI is rule-based first — an optional local model stays off by default, so the app works with no setup and no account.</p>
+    </div>
+
+    <div class="cs-block reveal">
+      <h2>Hard bugs I fixed</h2>
+      <ul>
+        <li><strong>YouTube broke overnight.</strong> Video sites change constantly — I added a startup auto-update for yt-dlp plus a self-heal that updates the engine and retries the download once.</li>
+        <li><strong>A real bug caught by tests.</strong> My Playwright E2E suite found the download code requesting 32 connections when aria2 caps at 16 — fixed in the adaptive-network code.</li>
+        <li><strong>A dialog nobody could click.</strong> At 1280×800 the Add-download dialog's footer buttons were unreachable by mouse — fixed with a scrollable dialog, verified by a real click in the E2E suite.</li>
+        <li><strong>A corrupt cookies file.</strong> A bad cookies export used to break downloads — the app now validates the file and skips it safely instead of failing.</li>
+      </ul>
+    </div>
+
+    <div class="cs-block reveal">
+      <h2>What is next</h2>
+      <p>Public launch, a video on the README, and install validation on Mac and Linux. The code is MIT-licensed and every release, issue and fix is on GitHub.</p>
+    </div>
+
+    <div class="cs-block reveal">
+      <a class="btn btn-primary" href="index.html">← Back to portfolio</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 Khalid Bin Masud · CSE, Presidency University · Dhaka, Bangladesh</span>
+    <span>Built with HTML, CSS &amp; JavaScript · <a href="#top">Back to top ↑</a></span>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+<div id="toast" role="status" aria-live="polite">Copied ✓</div>
+
+<script src="script.js"></script>
+</body>
+</html>
